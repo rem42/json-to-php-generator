@@ -23,6 +23,7 @@ export default class Settings {
     public addConstructor = true;
     public finalClasses = false;
     public allPropertiesNullable = false;
+    public allPropertiesDefaultToNullOrArray = false;
 
     public addFromJsonMethod = false;
     public jsonIsArray = true;

@@ -13,6 +13,9 @@ export default class PhpPropertyTypePresenter {
 
     public getPhpTypeNotation(): string {
         if (this.property.getTypes().length === 1) {
+            if(this.property.getTypes()[0].getType() === 'array') {
+                return this.property.getTypes()[0].getType();
+            }
             return (this.property.isNullable() ? '?' : '') + this.property.getTypes()[0].getType();
         }
 
@@ -44,7 +47,13 @@ export default class PhpPropertyTypePresenter {
             typeNotation += ' ';
         }
 
-        return typeNotation + this.getPhpVar();
+
+        let suffix = '';
+        if(this.settings.allPropertiesDefaultToNullOrArray) {
+            suffix = ' = '+(this.property.getTypes()[0].getType() === 'array' ? '[]' : 'null');
+        }
+
+        return typeNotation + this.getPhpVar() + suffix;
     }
 
     public getDocblockContent(): string {

@@ -46,6 +46,8 @@
 
                 <Checkbox label="All properties nullable" v-model="settings.allPropertiesNullable" />
 
+                <Checkbox label="All properties default to null or array" v-model="settings.allPropertiesDefaultToNullOrArray" />
+
                 <Checkbox label="Add extra new line after property" v-model="settings.propertyAddExtraNewLine" />
 
                 <Checkbox label="Add constructor" v-model="settings.addConstructor" />
