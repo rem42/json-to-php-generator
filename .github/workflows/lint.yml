@@ -11,8 +11,8 @@ jobs:
 
       - name: Install 🔧
         run: |
-          npm install
+          yarn install
 
       - name: Lint code 🔎
         run: |
-          npm run lint
+          yarn run lint
