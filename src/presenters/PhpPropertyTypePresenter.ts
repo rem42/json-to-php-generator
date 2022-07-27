@@ -57,7 +57,15 @@ export default class PhpPropertyTypePresenter {
     }
 
     public getDocblockContent(): string {
-        return this.property.getTypes().map(p => p.getDocblockContent()).join('|') + (this.property.isNullable() ? '|null' : '');
+        let isArray = false;
+        if(this.property.getTypes().length === 1 && this.property.getTypes()[0].getType() === 'array') {
+            isArray = true;
+        }
+        return this.property
+            .getTypes()
+            .map(p => p.getDocblockContent())
+            .join('|') + (this.property.isNullable() && !isArray ? '|null' : '')
+            ;
     }
 
     public getProperty(): PhpProperty {

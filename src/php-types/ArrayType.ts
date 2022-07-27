@@ -17,7 +17,7 @@ export default class ArrayType extends PhpType {
         }
         
         if (this.types.length === 1) {
-            return this.types[0].getDocblockContent() + '[]';
+            return 'array<int, '+this.types[0].getDocblockContent() + '>';
         }
 
         return '('+ this.types.map(type => type.getDocblockContent()).join('|') + ')' + '[]';
