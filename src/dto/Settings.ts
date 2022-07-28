@@ -18,15 +18,15 @@ export default class Settings {
     public getterCase = StringCase.CamelCase;
     public addSetters = false;
     public setterCase = StringCase.CamelCase;
-    public isFluentSetter = true;
+    public isFluentSetter = false;
     public addAdders = true;
     public adderCase = StringCase.CamelCase;
-    public isFluentAdder = false;
+    public isFluentAdder = true;
 
     public addConstructor = false;
     public finalClasses = false;
-    public allPropertiesNullable = false;
-    public allPropertiesDefaultToNullOrArray = false;
+    public allPropertiesNullable = true;
+    public allPropertiesDefaultToNullOrArray = true;
 
     public addFromJsonMethod = false;
     public jsonIsArray = true;
