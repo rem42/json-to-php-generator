@@ -50,12 +50,12 @@ export default class PhpPropertyTypePresenter {
         return currentType.getTypes()[0].getType();
     }
 
-    public getPhpVarName(): string {
-        return Str.changeCase(this.property.getName(), this.settings.propertyCase);
+    public getPhpVarName(toSingular = false): string {
+        return Str.changeCase(this.property.getName(toSingular), this.settings.propertyCase);
     }
 
-    public getPhpVar(): string {
-        return '$' + this.getPhpVarName();
+    public getPhpVar(toSingular = false): string {
+        return '$' + this.getPhpVarName(toSingular);
     }
 
     public getPhpVarWithType(): string {
@@ -74,19 +74,14 @@ export default class PhpPropertyTypePresenter {
         return typeNotation + this.getPhpVar() + suffix;
     }
 
-    public getPhpChildVarWithType(): string {
+    public getPhpChildVarWithType(toSingular = false): string {
         let typeNotation = this.getPhpChildTypeNotation();
 
         if (typeNotation !== '') {
             typeNotation += ' ';
         }
 
-        let suffix = '';
-        if(this.settings.allPropertiesDefaultToNullOrArray) {
-            suffix = ' = '+(this.property.getTypes()[0].getType() === 'array' ? '[]' : 'null');
-        }
-
-        return typeNotation + this.getPhpVar() + suffix;
+        return typeNotation + this.getPhpVar(toSingular);
     }
 
     public getDocblockContent(): string {

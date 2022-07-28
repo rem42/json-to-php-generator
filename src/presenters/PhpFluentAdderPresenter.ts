@@ -6,7 +6,7 @@ export default class PhpFluentAdderPresenter extends PhpAdderPresenter {
     public write(codeWriter: CodeWriter): void {
         codeWriter.openMethod(PhpVisibility.Public, `${this.getMethodSignature()}: void`);
         codeWriter.writeLine(
-            `$this->${this.propertyTypePresenter.getPhpVarName()}[] = ${this.propertyTypePresenter.getPhpVar()};`
+            `$this->${this.propertyTypePresenter.getPhpVarName()}[] = ${this.propertyTypePresenter.getPhpVar(true)};`
         );
         codeWriter.writeLine('return $this;');
         codeWriter.closeMethod();
