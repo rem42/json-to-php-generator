@@ -1,14 +1,17 @@
 import PhpClass from '@/dto/PhpClass';
 import Settings from '@/dto/Settings';
 import Str from '@/support/Str';
+import PhpAdderPresenter from '@/presenters/PhpAdderPresenter';
 import PhpGetterPresenter from '@/presenters/PhpGetterPresenter';
 import PhpSetterPresenter from '@/presenters/PhpSetterPresenter';
+import PhpFluentAdderPresenter from '@/presenters/PhpFluentAdderPresenter';
 import PhpFluentSetterPresenter from '@/presenters/PhpFluentSetterPresenter';
 import PhpConstructorPresenter from '@/presenters/PhpConstructorPresenter';
 import PhpClassFromJsonMethodPresenter from '@/presenters/PhpClassFromJsonMethodPresenter';
 import PhpPropertyPresenter from '@/presenters/PhpPropertyPresenter';
 import PhpPropertyTypePresenter from '@/presenters/PhpPropertyTypePresenter';
 import CodeWriter from '@/writers/CodeWriter';
+import ArrayType from '@/php-types/ArrayType';
 
 export default class PhpClassPresenter {
     private readonly phpClass: PhpClass;
@@ -75,6 +78,25 @@ export default class PhpClassPresenter {
                     (new PhpFluentSetterPresenter(property, this.settings)).write(codeWriter);
                 } else {
                     (new PhpSetterPresenter(property, this.settings)).write(codeWriter);
+                }
+            });
+        }
+
+        // adders
+        if (this.settings.addAdders) {
+            propertyTypePresenters.forEach(property => {
+                if (
+                    property.getProperty().getTypes().length !== 1
+                    || !(property.getProperty().getTypes()[0] instanceof ArrayType)
+                ) {
+                    return;
+                }
+                codeWriter.insertNewLine();
+
+                if (this.settings.isFluentAdder) {
+                    (new PhpFluentAdderPresenter(property, this.settings)).write(codeWriter);
+                } else {
+                    (new PhpAdderPresenter(property, this.settings)).write(codeWriter);
                 }
             });
         }

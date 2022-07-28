@@ -19,8 +19,11 @@ export default class Settings {
     public addSetters = false;
     public setterCase = StringCase.CamelCase;
     public isFluentSetter = true;
+    public addAdders = true;
+    public adderCase = StringCase.CamelCase;
+    public isFluentAdder = false;
 
-    public addConstructor = true;
+    public addConstructor = false;
     public finalClasses = false;
     public allPropertiesNullable = false;
     public allPropertiesDefaultToNullOrArray = false;

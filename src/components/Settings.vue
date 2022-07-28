@@ -63,6 +63,16 @@
                   />
 
                 </div>
+
+                <div class="flex">
+                  <Checkbox label="Add adders" v-model="settings.addAdders" class="mr-4" />
+
+                  <Checkbox v-if="settings.addAdders"
+                            label="Is fluent adder"
+                            v-model="settings.isFluentAdder"
+                  />
+
+                </div>
             </FormGroup>
         </TabContent>
 

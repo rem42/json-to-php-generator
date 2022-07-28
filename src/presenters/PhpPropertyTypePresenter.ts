@@ -1,6 +1,7 @@
 import Settings from '@/dto/Settings';
 import Str from '@/support/Str';
 import PhpProperty from '@/dto/PhpProperty';
+import ArrayType from '@/php-types/ArrayType';
 
 export default class PhpPropertyTypePresenter {
     private readonly property: PhpProperty;
@@ -32,6 +33,23 @@ export default class PhpPropertyTypePresenter {
         return '';
     }
 
+    public getPhpChildTypeNotation(): string {
+        if(
+            this.property.getTypes().length > 1
+            || !(this.property.getTypes()[0] instanceof ArrayType)
+        ) {
+            return '';
+        }
+
+        const currentType: ArrayType = this.property.getTypes()[0] as ArrayType;
+
+        if(currentType.getTypes().length !== 1) {
+            return '';
+        }
+
+        return currentType.getTypes()[0].getType();
+    }
+
     public getPhpVarName(): string {
         return Str.changeCase(this.property.getName(), this.settings.propertyCase);
     }
@@ -56,6 +74,21 @@ export default class PhpPropertyTypePresenter {
         return typeNotation + this.getPhpVar() + suffix;
     }
 
+    public getPhpChildVarWithType(): string {
+        let typeNotation = this.getPhpChildTypeNotation();
+
+        if (typeNotation !== '') {
+            typeNotation += ' ';
+        }
+
+        let suffix = '';
+        if(this.settings.allPropertiesDefaultToNullOrArray) {
+            suffix = ' = '+(this.property.getTypes()[0].getType() === 'array' ? '[]' : 'null');
+        }
+
+        return typeNotation + this.getPhpVar() + suffix;
+    }
+
     public getDocblockContent(): string {
         let isArray = false;
         if(this.property.getTypes().length === 1 && this.property.getTypes()[0].getType() === 'array') {
@@ -65,7 +98,7 @@ export default class PhpPropertyTypePresenter {
             .getTypes()
             .map(p => p.getDocblockContent())
             .join('|') + (this.property.isNullable() && !isArray ? '|null' : '')
-            ;
+        ;
     }
 
     public getProperty(): PhpProperty {
