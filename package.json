@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.2.16",
+    "@types/pluralize": "^0.0.29",
     "@types/prismjs": "^1.16.4",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
@@ -31,6 +32,7 @@
     "autoprefixer": "^9.8.6",
     "eslint": "^7.23.0",
     "eslint-plugin-vue": "^7.8.0",
+    "pluralize": "^8.0.0",
     "postcss": "^7.0.36",
     "sass": "^1.52.1",
     "sass-loader": "^10.1.1",

@@ -1,5 +1,6 @@
 import PhpProperty from '@/dto/PhpProperty';
 import ReservedKeywords from '@/php/ReservedKeywords';
+import pluralize, {isPlural} from 'pluralize';
 
 export default class PhpClass {
     private name: string;
@@ -13,11 +14,12 @@ export default class PhpClass {
     }
 
     public getName(): string {
-        if (ReservedKeywords.isReserved(this.name)) {
-            return this.name + 'Object';
+        const name = isPlural(this.name) ? pluralize.singular(this.name) : this.name;
+        if (ReservedKeywords.isReserved(name)) {
+            return name + 'Object';
         }
 
-        return this.name;
+        return name;
     }
 
     public setName(name: string): void {
@@ -34,5 +36,9 @@ export default class PhpClass {
 
     public getChildren(): PhpClass[] {
         return this.children;
+    }
+
+    protected isPlural(): boolean {
+        return pluralize.isPlural(this.name);
     }
 }

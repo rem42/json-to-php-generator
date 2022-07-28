@@ -4,7 +4,7 @@ import PhpPropertyTypePresenter from '@/presenters/PhpPropertyTypePresenter';
 import CodeWriter from '@/writers/CodeWriter';
 import {PhpVisibility} from '@/enums/PhpVisibility';
 
-export default class PhpSetterPresenter {
+export default class PhpAdderPresenter {
     protected readonly propertyTypePresenter: PhpPropertyTypePresenter;
     protected readonly settings: Settings;
 
@@ -20,12 +20,12 @@ export default class PhpSetterPresenter {
     public write(codeWriter: CodeWriter): void {
         codeWriter.openMethod(PhpVisibility.Public, `${this.getMethodSignature()}: void`);
         codeWriter.writeLine(
-            `$this->${this.propertyTypePresenter.getPhpVarName()}[] = ${this.propertyTypePresenter.getPhpVar()};`
+            `$this->${this.propertyTypePresenter.getPhpVarName()}[] = ${this.propertyTypePresenter.getPhpVar(true)};`
         );
         codeWriter.closeMethod();
     }
 
     protected getMethodSignature(): string {
-        return `${this.getMethodName()}(${this.propertyTypePresenter.getPhpChildVarWithType()})`;
+        return `${this.getMethodName()}(${this.propertyTypePresenter.getPhpChildVarWithType(true)})`;
     }
 }

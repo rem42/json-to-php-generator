@@ -2,6 +2,7 @@ import PhpType from '@/php-types/PhpType';
 import Settings from '@/dto/Settings';
 import NullType from '@/php-types/NullType';
 import ArrayType from '@/php-types/ArrayType';
+import pluralize from 'pluralize';
 
 export default class PhpProperty {
     private readonly name: string;
@@ -13,8 +14,11 @@ export default class PhpProperty {
         this.name = name;
     }
 
-    public getName(): string {
-        return this.name;
+    public getName(toSingular = false): string {
+        return (toSingular && this.isPlural())
+            ? pluralize.singular(this.name)
+            : this.name
+        ;
     }
 
     public getTypes(): PhpType[] {
@@ -76,5 +80,9 @@ export default class PhpProperty {
         }
 
         return this.types.length > 1 && !this.settings.supportsUnionType();
+    }
+
+    protected isPlural(): boolean {
+        return pluralize.isPlural(this.name);
     }
 }
