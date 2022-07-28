@@ -23,7 +23,7 @@ export default class PhpPropertyTypePresenter {
         if (this.settings.supportsUnionType()) {
             const types = this.property.getTypes().map(t => t.getType());
 
-            if (this.property.isNullable()) {
+            if (this.property.isNullable() && types.length > 0) {
                 types.push('null');
             }
 
@@ -65,10 +65,9 @@ export default class PhpPropertyTypePresenter {
             typeNotation += ' ';
         }
 
-
         let suffix = '';
         if(this.settings.allPropertiesDefaultToNullOrArray) {
-            suffix = ' = '+(this.property.getTypes()[0].getType() === 'array' ? '[]' : 'null');
+            suffix = ' = '+(this.property.getTypes().length > 0 && this.property.getTypes()[0].getType() === 'array' ? '[]' : 'null');
         }
 
         return typeNotation + this.getPhpVar() + suffix;
