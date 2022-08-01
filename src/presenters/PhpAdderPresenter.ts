@@ -14,7 +14,7 @@ export default class PhpAdderPresenter {
     }
 
     public getMethodName(): string {
-        return Str.changeCase('add_' + this.propertyTypePresenter.getPhpVarName(), this.settings.adderCase);
+        return Str.changeCase('add_' + this.propertyTypePresenter.getPhpVarName(true), this.settings.adderCase);
     }
 
     public write(codeWriter: CodeWriter): void {
